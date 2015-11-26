@@ -1,0 +1,74 @@
+.overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(#333F92, #57368C);
+    margin: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    h1 {
+        color: white;
+    }
+}
+
+.wrapper {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    background-image: linear-gradient(#333F92, #57368C);
+    .container {
+        height: 100%;
+        overflow-y: auto;
+        padding: 0;
+    }
+    .card {
+        margin: 0;
+    }
+    .col-sm-4 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100%;
+        flex-flow: column;
+        .card {
+            // width: 500px;
+        }
+    }
+    h1 {
+        color: #fff;
+        font-size: 8rem;
+        margin-bottom: 2rem;
+        font-weight: 100;
+    }
+    p {
+        color: #fff;
+        font-size: 1.5rem;
+        font-weight: 100;
+    }
+    .category-delete {
+        p {
+            color: #000;
+            font-size: 1.25rem;
+            font-weight: 400;
+        }
+    }
+    .icon-category {
+        display: inline-block;
+        width: 35px;
+    }
+    .note-text {
+        color: #000;
+        font-size: 1.25rem;
+        font-weight: 400;
+    }
+}
+
+.wrapper-auth {
+    padding: 0;
+    .container-auth {
+        padding: 10px;
+    }
+}

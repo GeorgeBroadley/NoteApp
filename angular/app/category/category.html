@@ -1,0 +1,45 @@
+<div class="overlay" ng-hide="categoryCtrl.hideOverlay">
+    <h1><i class="fa fa-refresh fa-spin fa-5x"></i></h1>
+</div>
+<div class="wrapper">
+    <div class="container">
+        <div class="card">
+            <div class="card-block">
+                <button class="btn btn-primary" ng-click="categoryCtrl.logout()"><i class="fa fa-sign-out"></i> Log Out</button>
+                <button class="btn btn-primary" ng-click="categoryCtrl.refresh()"><i ng-class="categoryCtrl.refreshClass"></i></button>
+                <form name="categoryCreate" novalidate>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <input type="text" class="form-control note-input" placeholder="Category" name="category" ng-model="categoryCtrl.category" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <select class="form-control category-type-select" name="cattype" ng-model="categoryCtrl.categoryType" required>
+                                    <option ng-repeat="categoryType in categoryCtrl.categoryTypes" value="{{categoryType.id}}">{{categoryType.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-block btn-lg" ng-disabled="categoryCreate.$invalid" ng-click="categoryCtrl.create()" ng-bind-html="categoryCtrl.categoryAddButton"></button>
+                </form>
+                <div ng-repeat="category in categoryCtrl.categories | orderBy:'-created_at'" class="clearfix">
+                    <hr />
+                    <h2 class="pull-left" ng-if="category.type == 1">
+                        <a class="btn btn-danger" href="#/categories/{{ category.id }}"><i class="fa fa-times"></i> Delete</a> <i class="fa fa-bookmark icon-category"></i> <a href="#/{{ category.id }}/bookmarks">{{ category.name }}</a>
+                    </h2>
+                    <h2 class="pull-left" ng-if="category.type == 2">
+                        <a class="btn btn-danger" href="#/categories/{{ category.id }}"><i class="fa fa-times"></i> Delete</a> <i class="fa fa-list icon-category"></i> <a href="#/{{ category.id }}/lists">{{ category.name }}</a>
+                    </h2>
+                    <h2 class="pull-left" ng-if="category.type == 3">
+                        <a class="btn btn-danger" href="#/categories/{{ category.id }}"><i class="fa fa-times"></i> Delete</a> <i class="fa fa-sticky-note icon-category"></i> <a href="#/{{ category.id }}/notes">{{ category.name }}</a>
+                    </h2>
+                    <h2 class="pull-right">
+                        {{ category.count }} Items
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

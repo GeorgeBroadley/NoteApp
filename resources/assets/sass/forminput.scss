@@ -1,0 +1,33 @@
+.form-group {
+    .form-control {
+        border: none;
+        text-align: center;
+    }
+
+    textarea {
+        resize: none;
+        overflow: hidden;
+    }
+
+    .category-type-select {
+        border-bottom: 2px solid grey;
+        font-size: 2em;
+        height: 62px;
+    }
+
+    .ng-invalid {
+        border-bottom: 2px red solid;
+    }
+
+    .ng-valid {
+        border-bottom: 2px green solid;
+    }
+
+    .ng-pristine {
+        border-bottom: 2px grey solid;
+    }
+
+    .note-input {
+        font-size: 2rem;
+    }
+}

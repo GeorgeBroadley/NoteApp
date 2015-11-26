@@ -1,0 +1,36 @@
+<div class="overlay" ng-hide="noteCtrl.hideOverlay">
+    <h1><i class="fa fa-refresh fa-spin fa-5x"></i></h1>
+</div>
+<div class="wrapper">
+    <div class="container">
+        <div class="card">
+            <div class="card-block">
+                <a class="btn btn-primary" href="#/categories"><i class="fa fa-chevron-left"></i> Back</a>
+                <button class="btn btn-primary" ng-click="noteCtrl.logout()"><i class="fa fa-sign-out"></i> Log Out</button>
+                <button class="btn btn-primary" ng-click="noteCtrl.refresh()"><i ng-class="noteCtrl.refreshClass"></i></button>
+                <form name="noteCreate" novalidate>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <input type="text" class="form-control note-input" placeholder="Note Title" name="note-item" ng-model="noteCtrl.noteTitle" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <textarea elastic class="form-control note-input" rows="1" placeholder="Note Text" name="note-item" ng-model="noteCtrl.noteText" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-block btn-lg" ng-disabled="noteCreate.$invalid" ng-click="noteCtrl.create()" ng-bind-html="noteCtrl.noteAddButton"></button>
+                </form>
+                <div ng-repeat="note in noteCtrl.notes | orderBy:'-created_at'">
+                    <hr />
+                    <h2>
+                        <button class="btn btn-danger" ng-click="noteCtrl.delete(note.id)" ng-disabled="noteCtrl.noteDelete" ng-bind-html="noteCtrl.noteDeleteButton"></button> {{ note.title }}
+                    </h2>
+                    <p class="note-text">{{ note.text }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

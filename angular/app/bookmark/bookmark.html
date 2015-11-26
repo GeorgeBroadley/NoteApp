@@ -1,0 +1,35 @@
+<div class="overlay" ng-hide="bookmarkCtrl.hideOverlay">
+    <h1><i class="fa fa-refresh fa-spin fa-5x"></i></h1>
+</div>
+<div class="wrapper">
+    <div class="container">
+        <div class="card">
+            <div class="card-block">
+                <a class="btn btn-primary" href="#/categories"><i class="fa fa-chevron-left"></i> Back</a>
+                <button class="btn btn-primary" ng-click="bookmarkCtrl.logout()"><i class="fa fa-sign-out"></i> Log Out</button>
+                <button class="btn btn-primary" ng-click="bookmarkCtrl.refresh()"><i ng-class="bookmarkCtrl.refreshClass"></i></button>
+                <form name="bookmarkCreate" novalidate>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <input type="text" class="form-control note-input" placeholder="Bookmark Title" name="bookmark-title" ng-model="bookmarkCtrl.bookmarkTitle" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <input type="url" class="form-control note-input" placeholder="Bookmark URL" name="bookmark-url" ng-model="bookmarkCtrl.bookmarkUrl" required>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-block btn-lg" ng-disabled="bookmarkCreate.$invalid" ng-click="bookmarkCtrl.create()" ng-bind-html="bookmarkCtrl.bookmarkAddButton"></button>
+                </form>
+                <div ng-repeat="bookmark in bookmarkCtrl.bookmarks | orderBy:'-created_at'">
+                    <hr />
+                    <h2>
+                        <button class="btn btn-danger" ng-click="bookmarkCtrl.delete(bookmark.id)" ng-disabled="bookmarkCtrl.bookmarkDelete" ng-bind-html="bookmarkCtrl.bookmarkDeleteButton"></button> <a ng-href="{{ bookmark.url }}">{{ bookmark.title }}</a>
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

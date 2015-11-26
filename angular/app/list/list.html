@@ -1,0 +1,26 @@
+<div class="overlay" ng-hide="listCtrl.hideOverlay">
+    <h1><i class="fa fa-refresh fa-spin fa-5x"></i></h1>
+</div>
+<div class="wrapper">
+    <div class="container">
+        <div class="card">
+            <div class="card-block">
+                <a class="btn btn-primary" href="#/categories"><i class="fa fa-chevron-left"></i> Back</a>
+                <button class="btn btn-primary" ng-click="listCtrl.logout()"><i class="fa fa-sign-out"></i> Log Out</button>
+                <button class="btn btn-primary" ng-click="listCtrl.refresh()"><i ng-class="listCtrl.refreshClass"></i></button>
+                <form name="listCreate" novalidate>
+                    <div class="form-group">
+                        <input type="text" class="form-control note-input" placeholder="List Item" name="list-item" ng-model="listCtrl.listItem" required>
+                    </div>
+                    <button class="btn btn-primary btn-block btn-lg" ng-disabled="listCreate.$invalid" ng-click="listCtrl.create()" ng-bind-html="listCtrl.listAddButton"></button>
+                </form>
+                <div ng-repeat="list in listCtrl.lists | orderBy:'-created_at'">
+                    <hr />
+                    <h2>
+                        <button class="btn btn-danger" ng-click="listCtrl.delete(list.id)" ng-disabled="listCtrl.listDelete" ng-bind-html="listCtrl.listDeleteButton"></button> {{ list.text }}
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
