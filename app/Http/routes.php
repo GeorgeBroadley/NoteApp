@@ -5,6 +5,7 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix' => 'api'], function () {
+    Route::resource('reminders', 'ReminderController', ['only' => ['show', 'store', 'destroy']]);
     Route::resource('lists', 'ListController', ['only' => ['show', 'store', 'destroy']]);
     Route::resource('notes', 'NoteController', ['only' => ['show', 'store', 'destroy']]);
     Route::resource('bookmarks', 'BookmarkController', ['only' => ['show', 'store', 'destroy']]);

@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
+use App\CategoryType;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,19 +22,24 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password')
         ));
 
-        CategoryTypes::create(array(
+        CategoryType::create(array(
             'name'       => 'Bookmarks',
             'table_name' => 'bookmarks',
         ));
 
-        CategoryTypes::create(array(
+        CategoryType::create(array(
             'name'       => 'Checklists',
             'table_name' => 'checklists',
         ));
 
-        CategoryTypes::create(array(
+        CategoryType::create(array(
             'name'       => 'Notes',
             'table_name' => 'notes',
+        ));
+
+        CategoryType::create(array(
+            'name'       => 'Reminders',
+            'table_name' => 'reminders',
         ));
 
         Model::reguard();
