@@ -4,62 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d8118b0c67b63b6a09972f56c644d23f",
+    "hash": "91b625bc8cb8dc0e1c2134afd21fc6b6",
     "packages": [
-        {
-            "name": "aloha/twilio",
-            "version": "2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/aloha/laravel-twilio.git",
-                "reference": "769542e66389463db10910b8ed1cd4ab749de255"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/aloha/laravel-twilio/zipball/769542e66389463db10910b8ed1cd4ab749de255",
-                "reference": "769542e66389463db10910b8ed1cd4ab749de255",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.5.0",
-                "twilio/sdk": "~3.12||~4.0"
-            },
-            "require-dev": {
-                "fabpot/php-cs-fixer": "^1.9",
-                "illuminate/console": "~4||~5",
-                "illuminate/support": "~4||~5",
-                "phpunit/phpunit": "~4.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Aloha\\Twilio\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Hannes Van De Vreken",
-                    "email": "vandevreken.hannes@gmail.com"
-                },
-                {
-                    "name": "Travis J Ryan",
-                    "email": "travisjryan@gmail.com"
-                }
-            ],
-            "description": "Twilio API for Laravel 4",
-            "homepage": "https://github.com/aloha/laravel-twilio",
-            "keywords": [
-                "ivr",
-                "laravel4",
-                "sms",
-                "twilio"
-            ],
-            "time": "2015-07-17 16:39:36"
-        },
         {
             "name": "classpreloader/classpreloader",
             "version": "3.0.0",
@@ -2039,6 +1985,60 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "aloha/twilio",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aloha/laravel-twilio.git",
+                "reference": "769542e66389463db10910b8ed1cd4ab749de255"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aloha/laravel-twilio/zipball/769542e66389463db10910b8ed1cd4ab749de255",
+                "reference": "769542e66389463db10910b8ed1cd4ab749de255",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0",
+                "twilio/sdk": "~3.12||~4.0"
+            },
+            "require-dev": {
+                "fabpot/php-cs-fixer": "^1.9",
+                "illuminate/console": "~4||~5",
+                "illuminate/support": "~4||~5",
+                "phpunit/phpunit": "~4.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Aloha\\Twilio\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Hannes Van De Vreken",
+                    "email": "vandevreken.hannes@gmail.com"
+                },
+                {
+                    "name": "Travis J Ryan",
+                    "email": "travisjryan@gmail.com"
+                }
+            ],
+            "description": "Twilio API for Laravel 4",
+            "homepage": "https://github.com/aloha/laravel-twilio",
+            "keywords": [
+                "ivr",
+                "laravel4",
+                "sms",
+                "twilio"
+            ],
+            "time": "2015-07-17 16:39:36"
+        },
         {
             "name": "doctrine/instantiator",
             "version": "1.0.5",

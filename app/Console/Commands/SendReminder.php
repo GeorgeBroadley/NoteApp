@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use App\User;
 use App\Reminder;
 use DateTime;
-use Aloha\Twilio\Twilio;
+use Config;
 
 class SendReminder extends Command
 {
@@ -55,9 +55,17 @@ class SendReminder extends Command
             $user = User::where('id', '=', $reminder->user_id)->first();
 
             // Send Text to User with Reminder Text
-            $twilio = new Twilio();
+            require('./vendor/twilio/sdk/Services/Twilio.php');
 
-            $twilio->message($user->telephone, $reminder->text);
+            $account_sid = Config::get('twilio.sid');
+            $auth_token = Config::get('twilio.token');
+            $client = new Services_Twilio($account_sid, $auth_token);
+
+            $client->account->messages->create(array(
+                'To'   => $user->telephone,
+                'From' => Config::get('twilio.from'),
+                'Body' => $reminder->text,
+            ));
         }
         return "Sent Texts";
     }

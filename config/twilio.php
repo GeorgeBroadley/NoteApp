@@ -43,18 +43,6 @@ return [
 
                 'from' => env('TWILIO_FROM_NUMBER'),
 
-                /*
-                |--------------------------------------------------------------------------
-                | Verify Twilio's SSL Certificates
-                |--------------------------------------------------------------------------
-                |
-                | Allows the client to bypass verifiying Twilio's SSL certificates.
-                | It is STRONGLY advised to leave this set to true for production environments.
-                |
-                */
-
-                'ssl_verify' => env('TWILIO_SSL_VERIFY'),
-
             ],
         ],
     ],
