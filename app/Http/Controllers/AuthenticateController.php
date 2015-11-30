@@ -35,6 +35,7 @@ class AuthenticateController extends Controller
         $credentials = array(
             'name' => $request->name,
             'email' => $request->email,
+            'telephone' => $request->telephone,
             'password' => Hash::make($request->password),
         );
 

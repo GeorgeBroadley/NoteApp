@@ -41,6 +41,8 @@ class SendReminder extends Command
      */
     public function handle()
     {
+        require('./vendor/twilio/sdk/Services/Twilio.php');
+
         // Get Current TimeStamp
         $date = new DateTime();
 
@@ -55,8 +57,6 @@ class SendReminder extends Command
             $user = User::where('id', '=', $reminder->user_id)->first();
 
             // Send Text to User with Reminder Text
-            require('./vendor/twilio/sdk/Services/Twilio.php');
-
             $account_sid = Config::get('twilio.sid');
             $auth_token = Config::get('twilio.token');
             $client = new Services_Twilio($account_sid, $auth_token);

@@ -20,6 +20,7 @@
             var credentials = {
                 name: vm.fullname,
                 email: vm.email,
+                telephone: vm.telephone,
                 password: vm.password
             };
 
