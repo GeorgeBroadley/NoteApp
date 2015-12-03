@@ -46,6 +46,11 @@
                     url: '/:category/bookmarks',
                     templateUrl: './views/bookmark/bookmark.html',
                     controller: 'BookmarkController as bookmarkCtrl'
+                })
+                .state('reminders', {
+                    url: '/:category/reminders',
+                    templateUrl: './views/reminder/reminder.html',
+                    controller: 'ReminderController as reminderCtrl'
                 });
         });
 })();

@@ -1,36 +1,53 @@
-<div class="overlay" ng-hide="categoryCtrl.hideOverlay">
+<div class="overlay" ng-hide="reminderCtrl.hideOverlay">
     <h1><i class="fa fa-refresh fa-spin fa-5x"></i></h1>
 </div>
 <div class="wrapper">
     <div class="container">
         <div class="card">
             <div class="card-block">
-                <button class="btn btn-primary" ng-click="categoryCtrl.logout()"><i class="fa fa-sign-out"></i> Log Out</button>
-                <button class="btn btn-primary" ng-click="categoryCtrl.refresh()"><i ng-class="categoryCtrl.refreshClass"></i></button>
-                <form name="categoryCreate" novalidate>
+                <a class="btn btn-primary" href="#/categories"><i class="fa fa-chevron-left"></i> Back</a>
+                <button class="btn btn-primary" ng-click="reminderCtrl.logout()"><i class="fa fa-sign-out"></i> Log Out</button>
+                <button class="btn btn-primary" ng-click="reminderCtrl.refresh()"><i ng-class="reminderCtrl.refreshClass"></i></button>
+                <form name="reminderCreate" novalidate>
                     <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                             <div class="form-group">
-                                <input type="text" class="form-control note-input" placeholder="Category" name="category" ng-model="categoryCtrl.category" required>
+                                <input type="text" class="form-control note-input" placeholder="Reminder Text" name="reminder-text" ng-model="reminderCtrl.reminderText" ng-maxlength="100" required>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                            <div class="form-group">
-                                <select class="form-control category-type-select" name="cattype" ng-model="categoryCtrl.categoryType" required>
-                                    <option ng-repeat="categoryType in categoryCtrl.categoryTypes" value="{{categoryType.id}}">{{categoryType.name}}</option>
+                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                            <div class="form-group reminder-flex">
+                                <select class="form-control category-type-select reminder-flex-select text-center" name="reminderday" ng-model="reminderCtrl.reminderDay" required>
+                                    <option ng-repeat="day in reminderCtrl.days" value="{{ day }}">{{ day }}</option>
+                                </select>
+                                <input class="form-control note-input reminder-flex-input" type="text" value="/" readonly>
+                                <select class="form-control category-type-select reminder-flex-select text-center" name="remindermonth" ng-model="reminderCtrl.reminderMonth" required>
+                                    <option ng-repeat="month in reminderCtrl.months" value="{{ month }}">{{ month }}</option>
+                                </select>
+                                <input class="form-control note-input reminder-flex-input" type="text" value="/" readonly>
+                                <select class="form-control category-type-select reminder-flex-select text-center" name="reminderyear" ng-model="reminderCtrl.reminderYear" required>
+                                    <option ng-repeat="year in reminderCtrl.years" value="{{ year }}">{{ year }}</option>
+                                </select>
+                                <input class="form-control note-input reminder-flex-input" type="text" value="-" readonly>
+                                <select class="form-control category-type-select reminder-flex-select text-center" name="reminderhour" ng-model="reminderCtrl.reminderHour" required>
+                                    <option ng-repeat="hour in reminderCtrl.hours" value="{{ hour }}">{{ hour }}</option>
+                                </select>
+                                <input class="form-control note-input reminder-flex-input" type="text" value=":" readonly>
+                                <select class="form-control category-type-select reminder-flex-select text-center" name="remindermin" ng-model="reminderCtrl.reminderMin" required>
+                                    <option ng-repeat="min in reminderCtrl.mins" value="{{ min }}">{{ min }}</option>
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary btn-block btn-lg" ng-disabled="categoryCreate.$invalid" ng-click="categoryCtrl.create()" ng-bind-html="categoryCtrl.categoryAddButton"></button>
+                    <button class="btn btn-primary btn-block btn-lg" ng-disabled="reminderCreate.$invalid" ng-click="reminderCtrl.create()" ng-bind-html="reminderCtrl.reminderAddButton"></button>
                 </form>
-                <div ng-repeat="category in categoryCtrl.categories | orderBy:'-created_at'" class="clearfix">
+                <div ng-repeat="reminder in reminderCtrl.reminders | orderBy:'-created_at'" class="clearfix">
                     <hr />
                     <h2 class="pull-left">
-                        <a class="btn btn-danger" ng-href="#/categories/{{ category.id }}"><i class="fa fa-times"></i> Delete</a> <i class="{{ categoryCtrl.getClass(category.type) }}"></i> <a ng-href="#/{{ category.id }}{{ categoryCtrl.getHref(category.type) }}">{{ category.name }}</a>
+                        <button class="btn btn-danger" ng-click="reminderCtrl.delete(reminder.id)" ng-disabled="reminderCtrl.reminderDelete" ng-bind-html="reminderCtrl.reminderDeleteButton"></button> {{ reminder.text }}
                     </h2>
                     <h2 class="pull-right">
-                        {{ category.count }} Items
+                        Reminder Date: {{ reminder.reminder }}
                     </h2>
                 </div>
             </div>

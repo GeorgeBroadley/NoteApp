@@ -4,30 +4,25 @@
 
     angular
         .module('noteApp')
-        .controller('CategoryController', ['$http', '$state', '$auth', 'SessionService', '$sce', CategoryController]);
+        .controller('ReminderController', ['$http', '$auth', '$state', '$stateParams', 'SessionService', '$sce', '$timeout', ReminderController]);
 
-    function CategoryController($http, $state, $auth, SessionService, $sce) {
-
+    function ReminderController($http, $auth, $state, $stateParams, SessionService, $sce, $timeout) {
         var vm = this;
+        vm.reminders = JSON.parse(SessionService.get('reminders' + $stateParams.category));
         vm.refreshClass = "fa fa-refresh";
-        vm.categoryAddButton = $sce.trustAsHtml('<i class="fa fa-check"></i> Create Category');
+        vm.reminderAddButton = $sce.trustAsHtml('<i class="fa fa-check"></i> Create Reminder');
+        vm.reminderDeleteButton = $sce.trustAsHtml('<i class="fa fa-cross"></i> Delete');
+        vm.reminderDelete = false;
+        vm.days = ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"];
+        vm.months = ["01","02","03","04","05","06","07","08","09","10","11","12"];
+        vm.years = ["2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025","2026","2027","2028","2029","2030","2031","2032","2033","2034","2035","2036","2037","2038","2039","2040"];
+        vm.hours = ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"];
+        vm.mins = ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"];
 
-        vm.categories = JSON.parse(SessionService.get('categories'));
-        vm.categoryTypes = JSON.parse(SessionService.get('category_types'));
-
-        if (!vm.categories) {
-            $http.get('/api/categories').success(function(data) {
-                SessionService.set('categories', JSON.stringify(data));
-                vm.categories = data;
-            }).error(function (data) {
-                $state.go('auth', {});
-            });
-        }
-
-        if (!vm.category_types) {
-            $http.get('/api/category_types').success(function(data) {
-                SessionService.set('categoryTypes', JSON.stringify(data));
-                vm.categoryTypes = data;
+        if (!vm.reminders) {
+            $http.get('/api/reminders/' + $stateParams.category).success(function (data) {
+                vm.reminders = data;
+                SessionService.set('reminders' + $stateParams.category, JSON.stringify(data));
                 vm.hideOverlay = true;
             }).error(function (data) {
                 $state.go('auth', {});
@@ -37,14 +32,39 @@
         }
 
         vm.create = function() {
-            console.log(vm.categoryType);
-            vm.categoryAddButton = $sce.trustAsHtml('<i class="fa fa-refresh fa-spin"></i>');
-            $http.post('/api/categories', {'name': vm.category, 'type': vm.categoryType}).success(function (data) {
-                vm.categories.push(data);
-                vm.category = "";
-                vm.categoryType = "";
-                SessionService.set('categories', JSON.stringify(vm.categories));
-                vm.categoryAddButton = $sce.trustAsHtml('<i class="fa fa-check"></i> Create Category');
+            vm.reminderDate = vm.reminderYear + "-" + vm.reminderMonth + "-" + vm.reminderDay + " " + vm.reminderHour + ":" + vm.reminderMin + ":00";
+            vm.reminderAddButton = $sce.trustAsHtml('<i class="fa fa-refresh fa-spin"></i>');
+            $http.post('/api/reminders', {'text': vm.reminderText, 'date': vm.reminderDate, 'category': $stateParams.category}).success(function (data) {
+                vm.reminders.push(data);
+                vm.reminderText = "";
+                vm.reminderDate = "";
+                SessionService.set('reminders' + $stateParams.category, JSON.stringify(vm.reminders));
+                vm.cats = JSON.parse(SessionService.get('categories'));
+                for (vm.i = 0; vm.i < vm.cats.length; vm.i++) {
+                    if (vm.cats[vm.i].id == $stateParams.category) {
+                        vm.cats[vm.i].count++;
+                    }
+                }
+                SessionService.set('categories', JSON.stringify(vm.cats));
+                vm.reminderAddButton = $sce.trustAsHtml('<i class="fa fa-check"></i> Create Reminder');
+            }).error(function (data) {
+                $state.go('auth', {});
+            });
+        };
+
+        vm.delete = function(id) {
+            vm.reminderDelete = true;
+            $http.delete('/api/reminders/' + id).success(function (data) {
+                vm.reminders = data;
+                SessionService.set('reminders' + $stateParams.category, JSON.stringify(data));
+                vm.cats = JSON.parse(SessionService.get('categories'));
+                for (vm.i = 0; vm.i < vm.cats.length; vm.i++) {
+                    if (vm.cats[vm.i].id == $stateParams.category) {
+                        vm.cats[vm.i].count--;
+                    }
+                }
+                SessionService.set('categories', JSON.stringify(vm.cats));
+                vm.reminderDelete = false;
             }).error(function (data) {
                 $state.go('auth', {});
             });
@@ -52,9 +72,9 @@
 
         vm.refresh = function() {
             vm.refreshClass = "fa fa-refresh fa-spin";
-            $http.get('/api/categories').success(function(data) {
-                SessionService.set('categories', JSON.stringify(data));
-                vm.categories = data;
+            $http.get('/api/reminders/' + $stateParams.category).success(function (data) {
+                vm.bookmarks = data;
+                SessionService.set('reminders' + $stateParams.category, JSON.stringify(data));
                 vm.refreshClass = "fa fa-refresh";
             }).error(function (data) {
                 $state.go('auth', {});
@@ -66,36 +86,5 @@
             SessionService.cle();
             $state.go('auth', {});
         };
-
-        vm.getClass = function(type) {
-            switch (type) {
-                case "1":
-                    return "fa fa-bookmark icon-category";
-                case "2":
-                    return "fa fa-list icon-category";
-                case "3":
-                    return "fa fa-sticky-note icon-category";
-                case "4":
-                    return "fa fa-clock-o icon-category";
-                default:
-                    return "fa fa-question icon-category";
-            }
-        };
-
-        vm.getHref = function(type) {
-            switch (type) {
-                case "1":
-                    return "/bookmarks";
-                case "2":
-                    return "/lists";
-                case "3":
-                    return "/notes";
-                case "4":
-                    return "/reminders";
-                default:
-                    return "/";
-            }
-        };
     }
-
 })();
