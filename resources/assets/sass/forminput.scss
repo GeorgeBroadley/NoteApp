@@ -30,4 +30,14 @@
     .note-input {
         font-size: 2rem;
     }
+
+    .reminder-flex-input {
+        border-bottom: 2px solid grey;
+        width: 20px;
+        padding: 0;
+    }
+}
+
+.reminder-flex {
+    display: flex;
 }
