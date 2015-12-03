@@ -69,13 +69,13 @@
 
         vm.getClass = function(type) {
             switch (type) {
-                case "1":
+                case 1:
                     return "fa fa-bookmark icon-category";
-                case "2":
+                case 2:
                     return "fa fa-list icon-category";
-                case "3":
+                case 3:
                     return "fa fa-sticky-note icon-category";
-                case "4":
+                case 4:
                     return "fa fa-clock-o icon-category";
                 default:
                     return "fa fa-question icon-category";
@@ -84,13 +84,13 @@
 
         vm.getHref = function(type) {
             switch (type) {
-                case "1":
+                case 1:
                     return "/bookmarks";
-                case "2":
+                case 2:
                     return "/lists";
-                case "3":
+                case 3:
                     return "/notes";
-                case "4":
+                case 4:
                     return "/reminders";
                 default:
                     return "/";
