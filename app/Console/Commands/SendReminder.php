@@ -69,9 +69,14 @@ class SendReminder extends Command
                     'Body' => $reminder->text,
                 ));
 
+                $reminder->sent = true;
+
                 $user->save();
             }
         }
+
+        $reminders->save();
+
         return "Sent Texts";
     }
 }

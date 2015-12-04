@@ -61,6 +61,9 @@ class ReduceReminder extends Command
 
             $user->save();
         }
+
+        $reminders->delete();
+        
         return "Sent Texts";
     }
 }

@@ -26,7 +26,7 @@ class ReminderController extends Controller
     public function show($id)
     {
         $user  = Auth::user()->id;
-        $lists = Reminder::where('user_id', '=', $user)->where('category_id', '=', $id)->get();
+        $lists = Reminder::where('user_id', '=', $user)->where('category_id', '=', $id)->where('sent', '=', false)->get();
 
         foreach ($lists as $list) {
             $list->reminder = DateTime::createFromFormat('Y-m-d H:i:s', $list->reminder)->format('d/m/Y H:i');

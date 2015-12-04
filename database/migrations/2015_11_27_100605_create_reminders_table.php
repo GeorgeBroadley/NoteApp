@@ -20,6 +20,7 @@ class CreateRemindersTable extends Migration
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->string('text');
             $table->dateTime('reminder');
+            $table->boolean('sent')->default(false);
             $table->timestamps();
         });
     }
