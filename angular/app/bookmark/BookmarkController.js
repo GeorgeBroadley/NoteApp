@@ -49,16 +49,20 @@
         vm.delete = function(id) {
             vm.bookmarkDelete = true;
             $http.delete('/api/bookmarks/' + id).success(function (data) {
-                vm.bookmarks = data;
-                SessionService.set('bookmarks' + $stateParams.category, JSON.stringify(data));
-                vm.cats = JSON.parse(SessionService.get('categories'));
-                for (vm.i = 0; vm.i < vm.cats.length; vm.i++) {
-                    if (vm.cats[vm.i].id == $stateParams.category) {
-                        vm.cats[vm.i].count--;
+                $http.get('/api/bookmarks/' + $stateParams.category).success(function (data) {
+                    vm.bookmarks = data;
+                    SessionService.set('bookmarks' + $stateParams.category, JSON.stringify(data));
+                    vm.cats = JSON.parse(SessionService.get('categories'));
+                    for (vm.i = 0; vm.i < vm.cats.length; vm.i++) {
+                        if (vm.cats[vm.i].id == $stateParams.category) {
+                            vm.cats[vm.i].count--;
+                        }
                     }
-                }
-                SessionService.set('categories', JSON.stringify(vm.cats));
-                vm.bookmarkDelete = false;
+                    SessionService.set('categories', JSON.stringify(vm.cats));
+                    vm.bookmarkDelete = false;
+                }).error(function (data) {
+                    $state.go('auth', {});
+                });
             }).error(function (data) {
                 $state.go('auth', {});
             });

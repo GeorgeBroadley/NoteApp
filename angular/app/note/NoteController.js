@@ -49,16 +49,20 @@
         vm.delete = function(id) {
             vm.noteDelete = true;
             $http.delete('/api/notes/' + id).success(function (data) {
-                vm.notes = data;
-                SessionService.set('notes' + $stateParams.category, JSON.stringify(data));
-                vm.cats = JSON.parse(SessionService.get('categories'));
-                for (vm.i = 0; vm.i < vm.cats.length; vm.i++) {
-                    if (vm.cats[vm.i].id == $stateParams.category) {
-                        vm.cats[vm.i].count--;
+                $http.get('/api/notes/' + $stateParams.category).success(function (data) {
+                    vm.notes = data;
+                    SessionService.set('notes' + $stateParams.category, JSON.stringify(data));
+                    vm.cats = JSON.parse(SessionService.get('categories'));
+                    for (vm.i = 0; vm.i < vm.cats.length; vm.i++) {
+                        if (vm.cats[vm.i].id == $stateParams.category) {
+                            vm.cats[vm.i].count--;
+                        }
                     }
-                }
-                SessionService.set('categories', JSON.stringify(vm.cats));
-                vm.noteDelete = false;
+                    SessionService.set('categories', JSON.stringify(vm.cats));
+                    vm.noteDelete = false;
+                }).error(function (data) {
+                    $state.go('auth', {});
+                });
             }).error(function (data) {
                 $state.go('auth', {});
             });

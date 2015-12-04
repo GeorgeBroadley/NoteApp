@@ -53,8 +53,6 @@ class BookmarkController extends Controller
         $bookmark = Bookmark::find($id);
         $bookmark->delete();
 
-        $bookmarks = Bookmark::all();
-
-        return Response::json($bookmarks, 200);
+        return Response::json('Note Deleted', 200);
     }
 }

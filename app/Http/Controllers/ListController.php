@@ -53,8 +53,6 @@ class ListController extends Controller
         $note = ListItem::find($id);
         $note->delete();
 
-        $notes = ListItem::all();
-
-        return Response::json($notes, 200);
+        return Response::json('Note Deleted', 200);
     }
 }

@@ -18,9 +18,13 @@
         vm.delete = function(id) {
             vm.categoryDelete = true;
             $http.delete('/api/categories/' + $stateParams.category).success(function (data) {
-                SessionService.rem('notes' + $stateParams.category);
-                SessionService.set('categories', JSON.stringify(data));
-                $state.go('categories', {});
+                $http.get('/api/categories').success(function(data) {
+                    SessionService.rem('notes' + $stateParams.category);
+                    SessionService.set('categories', JSON.stringify(data));
+                    $state.go('categories', {});
+                }).error(function (data) {
+                    $state.go('auth', {});
+                });
             }).error(function (data) {
                 $state.go('auth', {});
             });

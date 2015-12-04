@@ -53,8 +53,6 @@ class NoteController extends Controller
         $note = Note::find($id);
         $note->delete();
 
-        $notes = Note::all();
-
-        return Response::json($notes, 200);
+        return Response::json('Note Deleted', 200);
     }
 }

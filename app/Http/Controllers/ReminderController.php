@@ -29,7 +29,7 @@ class ReminderController extends Controller
         $lists = Reminder::where('user_id', '=', $user)->where('category_id', '=', $id)->get();
 
         foreach ($lists as $list) {
-            $list->reminder = DateTime::createFromFormat('Y-m-d H:i:s', $list->reminder)->format('d/m/Y H:i:s');
+            $list->reminder = DateTime::createFromFormat('Y-m-d H:i:s', $list->reminder)->format('d/m/Y H:i');
         }
 
         return Response::json($lists, 200);
@@ -51,6 +51,8 @@ class ReminderController extends Controller
         $note->reminder    = $request->date;
         $note->save();
 
+        $note->reminder = DateTime::createFromFormat('Y-m-d H:i:s', $note->reminder)->format('d/m/Y H:i');
+
         return Response::json($note, 200);
     }
 
@@ -59,8 +61,6 @@ class ReminderController extends Controller
         $note = Reminder::find($id);
         $note->delete();
 
-        $notes = Reminder::all();
-
-        return Response::json($notes, 200);
+        return Response::json('Note Deleted', 200);
     }
 }

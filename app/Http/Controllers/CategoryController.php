@@ -67,13 +67,6 @@ class CategoryController extends Controller
         $category = Category::find($id);
         $category->delete();
 
-        $categories = Category::all();
-
-        foreach ($categories as $category) {
-            $noteCount = Note::where('category_id', '=', $category->id)->count();
-            $category->count = $noteCount;
-        }
-
-        return Response::json($categories, 200);
+        return Response::json('Note Deleted', 200);
     }
 }
