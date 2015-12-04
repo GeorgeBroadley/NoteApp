@@ -6,23 +6,23 @@ use Illuminate\Console\Command;
 use App\User;
 use App\Reminder;
 use DateTime;
-use Config;
+use DateInterval;
 
-class SendReminder extends Command
+class ReduceReminder extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'reminders:send';
+    protected $signature = 'reminders:reduce';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Query Database and Send Reminders';
+    protected $description = 'Decrement text sent value in database';
 
     /**
      * Create a new command instance.
@@ -41,10 +41,11 @@ class SendReminder extends Command
      */
     public function handle()
     {
-        require_once('./vendor/twilio/sdk/Services/Twilio.php');
-
         // Get Current TimeStamp
         $date = new DateTime();
+        $diff = new DateInterval('PT1H');
+
+        $date = $date->sub($diff);
 
         $date = $date->format('Y-m-d H:i:00');
 
@@ -56,21 +57,9 @@ class SendReminder extends Command
             // Get User for Reminder
             $user = User::where('id', '=', $reminder->user_id)->first();
 
-            if ($user->textsent < $user->textlimit) {
-                $user->textsent++;
-                // Send Text to User with Reminder Text
-                $account_sid = Config::get('twilio.sid');
-                $auth_token = Config::get('twilio.token');
-                $client = new Services_Twilio($account_sid, $auth_token);
+            $user->textsent--;
 
-                $client->account->messages->create(array(
-                    'To'   => $user->telephone,
-                    'From' => Config::get('twilio.from'),
-                    'Body' => $reminder->text,
-                ));
-
-                $user->save();
-            }
+            $user->save();
         }
         return "Sent Texts";
     }
