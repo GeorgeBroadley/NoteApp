@@ -61,7 +61,7 @@ class SendReminder extends Command
                 // Send Text to User with Reminder Text
                 $account_sid = Config::get('twilio.sid');
                 $auth_token = Config::get('twilio.token');
-                $client = new Services_Twilio($account_sid, $auth_token);
+                $client = new \Services_Twilio($account_sid, $auth_token);
 
                 $client->account->messages->create(array(
                     'To'   => $user->telephone,
