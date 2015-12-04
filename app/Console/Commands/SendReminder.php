@@ -41,7 +41,7 @@ class SendReminder extends Command
      */
     public function handle()
     {
-        require('./vendor/twilio/sdk/Services/Twilio.php');
+        require_once('./vendor/twilio/sdk/Services/Twilio.php');
 
         // Get Current TimeStamp
         $date = new DateTime();
