@@ -14,10 +14,104 @@
         vm.reminderDeleteButton = $sce.trustAsHtml('<i class="fa fa-cross"></i> Delete');
         vm.reminderDelete = false;
         vm.days = ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"];
-        vm.months = ["01","02","03","04","05","06","07","08","09","10","11","12"];
-        vm.years = ["2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025","2026","2027","2028","2029","2030","2031","2032","2033","2034","2035","2036","2037","2038","2039","2040"];
-        vm.hours = ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"];
-        vm.mins = ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"];
+        vm.monthsAvailable = ["01","02","03","04","05","06","07","08","09","10","11","12"];
+        vm.yearsAvailable = ["2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025","2026","2027","2028","2029","2030","2031","2032","2033","2034","2035","2036","2037","2038","2039","2040"];
+        vm.hoursAvailable = ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"];
+        vm.minsAvailable = ["00","05","10","15","20","25","30","35","40","45","50","55"];
+
+        vm.years = [];
+        vm.months = [];
+        vm.hours = [];
+        vm.mins = [];
+
+        vm.today = new Date();
+        vm.day = vm.today.getDate();
+        vm.month = vm.today.getMonth()+1;
+        vm.year = vm.today.getFullYear();
+        vm.hour = vm.today.getHours();
+        vm.min = vm.today.getMinutes();
+
+        vm.dateChange = function() {
+            vm.months = [];
+            vm.years = [];
+            vm.hours = [];
+            vm.mins = [];
+            vm.months = vm.monthsAvailable;
+
+            if (vm.reminderMonth !== undefined) {
+                if (vm.reminderMonth < vm.month || vm.reminderDay < vm.day) {
+                    vm.yearsAvailable.forEach(function(i) {
+                        if (i > vm.year) {
+                            vm.years.push(i);
+                        }
+                    });
+                } else {
+                    vm.years = vm.yearsAvailable;
+                }
+            }
+
+            if (vm.reminderYear !== undefined) {
+                if (vm.reminderDay == vm.day && vm.reminderMonth == vm.month && vm.reminderYear == vm.year) {
+                    vm.hoursAvailable.forEach(function(i) {
+                        if (i >= vm.hour) {
+                            vm.hours.push(i);
+                        }
+                    });
+                } else {
+                    vm.hours = vm.hoursAvailable;
+                }
+            }
+
+            if (vm.reminderHour !== undefined) {
+                if (vm.reminderDay == vm.day && vm.reminderMonth == vm.month && vm.reminderYear == vm.year && vm.reminderHour == vm.hour) {
+                    vm.minsAvailable.forEach(function(i) {
+                        if (i >= vm.min) {
+                            vm.mins.push(i);
+                        }
+                    });
+                } else {
+                    vm.mins = vm.minsAvailable;
+                }
+            }
+
+            vm.check = 0;
+
+            vm.years.forEach(function(i) {
+                if (i == vm.reminderYear) {
+                    vm.check++;
+                }
+            });
+
+            if (vm.check === 0) {
+                vm.reminderYear = undefined;
+            } else {
+                vm.check = 0;
+            }
+
+            vm.hours.forEach(function(i) {
+                if (i == vm.reminderHour) {
+                    vm.check++;
+                }
+            });
+
+            if (vm.check === 0) {
+                vm.reminderHour = undefined;
+            } else {
+                vm.check = 0;
+            }
+
+            vm.mins.forEach(function(i) {
+                if (i == vm.reminderMin) {
+                    vm.check++;
+                }
+            });
+
+            if (vm.check === 0) {
+                vm.reminderMin = undefined;
+            } else {
+                vm.check = 0;
+            }
+        };
 
         if (!vm.reminders) {
             $http.get('/api/reminders/' + $stateParams.category).success(function (data) {
