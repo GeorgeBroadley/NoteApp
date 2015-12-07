@@ -24,14 +24,14 @@
         vm.hours = [];
         vm.mins = [];
 
-        vm.today = new Date();
-        vm.day = vm.today.getDate();
-        vm.month = vm.today.getMonth()+1;
-        vm.year = vm.today.getFullYear();
-        vm.hour = vm.today.getHours();
-        vm.min = vm.today.getMinutes();
-
         vm.dateChange = function() {
+            vm.today = new Date();
+            vm.day = vm.today.getDate();
+            vm.month = vm.today.getMonth()+1;
+            vm.year = vm.today.getFullYear();
+            vm.hour = vm.today.getHours();
+            vm.min = vm.today.getMinutes();
+
             vm.months = [];
             vm.years = [];
             vm.hours = [];
